@@ -31,3 +31,8 @@ You need to complete the following steps:
 2. Ensure that your code is synthesizable, by testing with ISE for synthesis.  Only the `ALU32` and `DummyDecoder` blocks need to be synthesizable.
 3. Create a hardware test bench for the `ALU32` module, with VIO for inputs and opcode, and verify correct behaviour on hardware.  Note that you can skip the automated tests here, but if you can figure out a way to automate it, that will count as a bonus.
  
+ ## How I did it...
+As we can see, there are only 19 instructions that completes ALU module (ADDI to AND).  
+![alt text](instructions.PNG)
+
+As there are 19 instructions, we need 5 bits for distinct opcode. We can take {instr[30], instr[14:12], instr[5]} for getting distinct opcodes. Using a dummy decoder, we map every distinct opcode to integers 0 to 18 and using `case` in verilog module, we can implement `alu.v`.
