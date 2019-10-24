@@ -1,0 +1,21 @@
+//Make sure you initiate R0 as 32'h00000000
+
+00000fb3 //0ADD R31, R0, R0
+800010b7 //1LUI R1, 80001000
+01000137 //2LUI R2, 01000000
+01900193 //3ADDI R3, R0, 12'd25
+01800213 //4ADDI R4, R0, 12'd24
+004182e7 //5JALR to Imm+R3 and store in R5. Imm = 4 . {Should branch to inst.7}
+02000463 //6BEQ R0,R0 to last inst. <fail> Offset = (16-6)*4 = 40(0000 0010 1000)
+02521263 //7BNE R4, R5 to last inst. Offset = (16-7)*4 = 36(0000 0010 0100) {Not supposed to branch.}
+0020ce63 //8BLT R1,R2 to instr15. Offset = (15-8)*4 = 28(0000 0001 1100)
+00000e63 //9BEQ R0,R0 to last inst. <fail> Offset = (16-9)*4 = 28(0000 0001 1100)
+0020f463//10BGEU R1,R2 to instr12. Offset = 8(0000 0000 1000)
+00000a63 //11BEQ R0,R0 to last inst. <fail> Offset = (16-11)*4 = 20(0000 0001 0100)
+04000393 //12ADDI R7,R0, 12'64
+00639663 //13BNE R7,R6 to last inst. Offset = (16-13)*4 = 12(0000 0000 1100){Not supposed to branch.}
+fc6384e3 //14BEQ R7,R6 to instr0. Offset = -14*4 = -56(1 1111 1100 1000) {Success.. Goto inst. 0 and repeat..}
+fedff36f //15JAL to instr10. and store in R6. Offset = (10-15)*4 = -20(1 1111 1111 1111 1110 1100) 
+00100f93 //16ADDI R31,R0,1 <FAIL>
+
+//Expected order of pc/iaddr -> 0,4,8,12,16,20,28,32,60,40,48,52,56,0,4,.....

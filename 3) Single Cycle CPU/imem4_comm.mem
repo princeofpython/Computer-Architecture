@@ -1,0 +1,15 @@
+//Make sure you initiate R0 as 32'h00000000
+
+00000fb3 // ADD R31,R0,R0
+00400093 // ADDI R1,R0,4
+00600113 // ADDI R2,R0,6
+401101b3 // SUB R3,R2,R1
+00200213 // ADDI R4,R0,2
+00419e63 // BNE R3,R4. Jump to inst12. Offset = (12-5)*4 = 28
+00500293 // ADDI R5,R0,5
+00900313 // ADDI R6,R0,9
+0062a3b3 // SLT R7,R5,R6
+00100413 // ADDI R8,R0,1
+00839463 // BNE R7,R8. Jump to inst12. Offset = (12-10)*4 =8
+fd5ff56f //JAL to instr0. Store PC in R10 -44
+00100f93 //ADDI R31, R0, 1. FAIL

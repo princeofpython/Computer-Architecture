@@ -19,11 +19,17 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module imem(
+	 input clk,
     input [31:0] iaddr,
-    output [31:0] idata
+    output reg [31:0] idata
     );
 reg [31:0] IMEM[1023:0];
-
-assign idata = IMEM[iaddr[9:0]];
+initial begin
+	$readmemh("IMEM.mem",IMEM);
+end
+	always@(posedge clk)
+	begin
+		idata[31:0] <= IMEM[iaddr[9:0]];
+	end
 
 endmodule

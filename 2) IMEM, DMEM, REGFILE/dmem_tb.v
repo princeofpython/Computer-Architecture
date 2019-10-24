@@ -25,7 +25,7 @@
 module dmem_tb;
 
 	// Inputs
-	reg we;
+	reg [3:0]we;
 	reg clk;
 	reg [31:0] daddr;
 	reg [31:0] indata;
@@ -45,28 +45,28 @@ module dmem_tb;
 	initial begin
 		clk=1;
 		// Initialize Inputs
-		we = 1;
-		daddr = 4000;
+		we = 4'b0001;
+		daddr = 500;
 		indata = 250;
 
 		// Wait 100 ns for global reset to finish
 		#100;
-       we = 0;
-		daddr = 2000;
+       we = 4'b0001;
+		daddr = 500;
 		indata = 100;
 		// Add stimulus here
 		#100
-		we = 1;
-		daddr = 2000;
-		indata = 100;
-		#100
-		we = 1;
+		we = 4'b0101;
 		daddr = 1000;
-		indata = 50;		
+		indata = 21'b111110000000000100101;
 		#100
-		we = 0;
+		we = 4'b0011;
 		daddr = 1000;
-		indata = 10;		
+		indata = 512;		
+		#100
+		we = 4'b0000;
+		daddr = 1000;
+		indata = 100;		
 	end
       
 endmodule

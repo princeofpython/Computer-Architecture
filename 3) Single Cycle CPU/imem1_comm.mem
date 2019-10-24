@@ -1,0 +1,21 @@
+//Make sure you initiate R0 as 32'h00000000
+
+00000fb3 //ADD R31, R0, R0
+00201083 //LH R1, 2(R0)
+00100103 //LB R2, 1(R0)
+01009093 //SLLI 8-bits from R1 to R1
+00811113 //SLLI 4-bits from R2 to R2
+001101b3 //ADD R3, R1, R2
+00002203 //LW R4, 0(R0)
+02321263 //bne R4, R3 to instruction 18. Offset = (18-7)*4 = 36
+00601283 //LH R5, 6(R0)
+00500303 //LB R6, 5(R0)
+00400383 //LB R7, 4(R0)
+01029293 //SLLI 8-bits from R5 to R5
+00831313 //SLLI 4-bits from R6 to R6
+00638433 //ADD R8, R7, R6
+00540433 //ADD R8, R8, R5
+00702483 //LW R9, 7(R0)
+00849463 //bne R9, R8 to instruction 18. Offset = (18-16)*4 = 8
+fbdff56f //JAL to instr0. Store PC in R10 
+00100f93 //ADDI R31, R0, 1. FAIL 

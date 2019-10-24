@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date:    00:15:58 09/04/2019 
+// Create Date:    00:51:59 09/04/2019 
 // Design Name: 
-// Module Name:    dmem 
+// Module Name:    regfile 
 // Project Name: 
 // Target Devices: 
 // Tool versions: 
@@ -18,18 +18,27 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module dmem(
-    input we, clk,
-	 input [31:0] daddr,
+module regfile(
+    input [4:0] rs1,
+    input [4:0] rs2,
+    input [4:0] rd,
     input [31:0] indata,
-    output reg [31:0] outdata
-	 
+    input we,
+    input clk,
+    output reg [31:0] rv1,
+    output reg [31:0] rv2
     );
-reg [7:0] DMEM[2**12-1:0];
-always @ (posedge clk)begin
-	if (we) begin
-	DMEM[daddr[11:0]] <= indata[7:0];
+
+reg [31:0] RF[31:0];
+initial begin
+	$readmemh("RegFile.mem",RF);
 	end
-	outdata[7:0] <= DMEM[daddr[11:0]];
-	end
+always @ (posedge clk) begin
+if(we)
+	begin
+		RF[rd] <= indata;
+	end 
+	rv1 <= (rs1 !=0) ? RF[rs1] : 0;
+	rv2 <= (rs2 !=0) ? RF[rs2] : 0;
+end
 endmodule
