@@ -116,7 +116,7 @@ It provides logic for ALU operation
 | `10`  | normal         | 
 
 ### regin [1:0]
-It decides `indata' for `regfile`.
+It decides `indata` for `regfile`.
 
 | `regin`      | `indata` |  
 | ----------- | ----------- |  
