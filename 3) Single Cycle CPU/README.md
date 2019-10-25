@@ -1,8 +1,9 @@
 # Single-cycle CPU implementation
 
-Now that we successfully implemented ALU, DMEM, IMEM, REGFILE which are impoertant parts of a processor, we almost finished 25% of our work. Now we should write a CONTROL UNIT to decide what to do for each instruction and PC (Program Counter) to maintain flow of instructions. I refered Computer Organisation and Design by Hennessy and Patterson in case of queries.
+Now that we successfully implemented ALU, DMEM, IMEM, REGFILE which are impoertant parts of a processor, we almost finished 25% of our work. Now we should write a CONTROL UNIT to decide what to do for each instruction and PC (Program Counter) to maintain flow of instructions.  
+My approach is similar to that of the idea in chapter 4 of book **Computer Organisation and Design by Hennessy and Patterson**.
 
-**Goal** Implement a single cycle CPU
+**Goal :** Implement a single cycle CPU
 
 ### Assumptions
 - IMEM and DMEM are capable of combinational read, and DMEM does clocked write (value in memory updated at clock edge).  
