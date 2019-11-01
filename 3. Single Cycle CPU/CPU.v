@@ -34,6 +34,7 @@ module CPU(
 
 
 wire [31:0] PC_next;
+wire [31:0] PC_plus4;
 
 always @(posedge reset or posedge clk) begin
 		if (reset)
@@ -83,7 +84,6 @@ regfile REGFILE(
 		.indata(regindata),
 		.we(regwrite),
 		.clk(clk),
-		.reset(1'b0),
 		.rv1(datawire1),
 		.rv2(datawire2),
 		.x31(x31)

@@ -40,5 +40,5 @@ assign PC_next = (branch == 3'b001 && (~zero) ) ? PC_branch : //BNE, BLT, BLTU
 					  (branch == 3'b010 && zero ) ? PC_branch : // BEQ, BGE, BGEU
                  (branch == 3'b010 && (~zero) ) ? PC_plus4 : 
 					  (branch == 3'b011) ?  PC_branch :  // JAL
-					  (branch == 3'b100) ? (aluoutdata << 1'b1) :PC_plus4; //JALR
+					  (branch == 3'b100) ? (aluoutdata & 32'hFFFFFFFE) :PC_plus4; //JALR
 endmodule

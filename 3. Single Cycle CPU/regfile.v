@@ -24,10 +24,10 @@ module regfile(
     input [4:0] rd,
     input [31:0] indata,
     input  we,
-    input clk, reset,
-    output reg [31:0] rv1,
-    output reg [31:0] rv2,
-	 output reg [31:0] x31
+    input clk,
+    output [31:0] rv1,
+    output [31:0] rv2,
+	 output [31:0] x31
     );
 
 reg [31:0] RF[31:0];
@@ -40,17 +40,13 @@ initial begin
     RF[j] = {32{1'b0}};
 end
 
-always @* begin
- rv1 = (rs1 !=0) ? RF[rs1] : 0;
- rv2 = (rs2 !=0) ? RF[rs2] : 0;
- x31 = RF[31];
- end
+
+ assign rv1 = (rs1 !=0) ? RF[rs1] : 0;
+ assign rv2 = (rs2 !=0) ? RF[rs2] : 0;
+ assign x31 = RF[31];
+
  
 always @ (posedge clk) begin
-if (reset)
-			for (i = 1; i < 32; i = i + 1)
-				RF[i] <= 32'h00000000;
-
 if(we)
 	begin
 		RF[rd] <= indata;

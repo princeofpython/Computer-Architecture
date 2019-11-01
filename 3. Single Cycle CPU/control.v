@@ -37,12 +37,12 @@ wire [2:0] funct3;
 assign opcode = idata[6:0];
 assign funct3 = idata[14:12];
 
-assign branch=  (opcode == 7'b1100011 && funct3 == 000)? 3'b010:
-					 (opcode == 7'b1100011 && funct3 == 101)? 3'b010:
-					 (opcode == 7'b1100011 && funct3 == 111)? 3'b010:
-					 (opcode == 7'b1100011 && funct3 == 001)? 3'b001:
-					 (opcode == 7'b1100011 && funct3 == 100)? 3'b001:
-					 (opcode == 7'b1100011 && funct3 == 110)? 3'b001:
+assign branch=  (opcode == 7'b1100011 && funct3 == 3'b000)? 3'b010:
+					 (opcode == 7'b1100011 && funct3 == 3'b101)? 3'b010:
+					 (opcode == 7'b1100011 && funct3 == 3'b111)? 3'b010:
+					 (opcode == 7'b1100011 && funct3 == 3'b001)? 3'b001:
+					 (opcode == 7'b1100011 && funct3 == 3'b100)? 3'b001:
+					 (opcode == 7'b1100011 && funct3 == 3'b110)? 3'b001:
 					 (opcode == 7'b1101111 )? 3'b011 : 
 					 (opcode == 7'b1100111 )? 3'b100 : 3'b000;
 
