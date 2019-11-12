@@ -41,6 +41,7 @@ wire staller;
 assign idatawire = idata;
 assign PC_plus4 = PC + 32'd4;
 
+// incrementing PC only if staller is zero and PCsrc decides next instruction
 always @(posedge reset or posedge clk) begin
 		if (reset)
 			PC <= 32'h00000000;
@@ -53,6 +54,8 @@ assign iaddr = PC;
 
 wire [31:0] PC_ID;
 wire [31:0] idata_ID;
+
+// IF_ID interface
 
 IF_ID ifid(
 		.clk(clk),
@@ -139,6 +142,7 @@ immgen IMMGEN(
 		);
 reg PCsrc2;
 
+// making control signals zero for bubbling instructions in case of data or control hazards
 ID_EX idex(
 		.clk(clk),
 		.regin_in((staller || PCsrc || PCsrc2) ? 0 : regin),
@@ -185,6 +189,7 @@ wire [31:0] aluoutdata;
 wire [31:0] PC_plus4_EX;
 
 wire [1:0] forwardA, forwardB;
+
 // Forwarding unit
 forwarding_unit FU(
 		.idata_EX(idata_EX),
@@ -212,7 +217,8 @@ alu ALU(
 		.out(aluoutdata),
 		.zero(zero)
 		);
-		
+
+// Program Counter which is also a control hazard detector
 PC ProgCount(
 		.PC(PC_EX),
 		.immgen(immgen_EX),
@@ -225,6 +231,8 @@ PC ProgCount(
 		);
 		
 
+// If any control hazard takes place, two instructions need to be bubbled. So we need to create a new signal which carries PCsrc for next clk cycle 
+// and check if it is 1.
 initial PCsrc2 = 0;
 
 always@(posedge clk)begin
@@ -239,6 +247,8 @@ wire memtoreg_MEM;
 wire [3:0] memwrite_MEM;
 wire [1:0] regin_MEM;
 wire [31:0]datawire2_MEM;
+
+// EX_MEM interface
 
 EX_MEM exmem(
 		.clk(clk),
@@ -283,6 +293,8 @@ wire memtoreg_WB;
 wire [1:0] regin_WB;
 wire [31:0]drdata_WB;
 
+// MEM_WB interface
+
 MEM_WB memwb(
 		.clk(clk),
 		.memtoreg_in(memtoreg_MEM),
@@ -314,7 +326,7 @@ assign regindata = (regin_WB == 2'b00) ? immgen_WB :
 						 (regin_WB == 2'b01) ? indataforreg :
 						 (regin_WB == 2'b10) ? PC_plus4_WB : indataforreg ;
 
-// CAlculation of next iaddr
+
 
 
 endmodule
