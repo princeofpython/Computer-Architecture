@@ -1,5 +1,5 @@
 # Computer-Organisation
-Detailed and step by step implementation of RISC-V CPU from scratch using Verilog. This work is part of my academic course EE2003 (Computer Organisation) .
+Detailed and step by step implementation of RISC-V CPU from scratch using Verilog. This work is part of my academic course EE2003 (Computer Organisation) during fall semester of 2019.
 
 ## Contents
 - [Arithmetic Logic Unit](https://github.com/princeofpython/Computer-Organisation/tree/master/1.%20ALU)
